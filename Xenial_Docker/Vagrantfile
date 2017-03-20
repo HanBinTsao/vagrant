@@ -1,0 +1,48 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+    config.vm.define "node1" do |node1|
+        node1.vm.box = "https://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-vagrant.box"
+        node1.vm.hostname = 'node1'
+        #node1.vm.synced_folder "R:/vshare/", "/vshare"
+        #config.vm.network "forwarded_port", guest: 80, host: 8881
+        #node1.vm.network :private_network, ip: "192.168.100.10"
+        node1.vm.network "private_network", type: "dhcp"
+        node1.vm.provider :virtualbox do |v|
+            v.name = "node1"
+            v.customize ["modifyvm", :id, "--name", "node1"]
+        end
+    end
+
+    config.vm.define "node2" do |node2|
+        node2.vm.box = "https://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-vagrant.box"
+        node2.vm.hostname = 'node2'
+        #node2.vm.synced_folder "R:/vshare/", "/vshare"
+        #config.vm.network "forwarded_port", guest: 80, host: 8882
+        #node2.vm.network :private_network, ip: "192.168.100.20"
+        node2.vm.network "private_network", type: "dhcp"
+        node2.vm.provider :virtualbox do |v|
+            v.name = "node2"
+            v.customize ["modifyvm", :id, "--name", "node2"]
+        end
+    end
+
+    config.vm.define "node3" do |node3|
+        node3.vm.box = "https://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-vagrant.box"
+        node3.vm.hostname = 'node3'
+        #node3.vm.synced_folder "R:/vshare/", "/vshare"
+        #config.vm.network "forwarded_port", guest: 80, host: 8883
+        #node3.vm.network :private_network, ip: "192.168.100.30"
+        node3.vm.network "private_network", type: "dhcp"
+        node3.vm.provider :virtualbox do |v|
+            v.name = "node3"
+            v.customize ["modifyvm", :id, "--name", "node3"]
+        end
+    end
+
+  #config.vm.network "forwarded_port", guest: 80, host: 8080
+  #config.vm.network "private_network", type: "dhcp"
+  #config.vm.network "public_network"
+
+end

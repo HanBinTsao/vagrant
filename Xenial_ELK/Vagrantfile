@@ -1,0 +1,40 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All the hosts get their own host name, edit the line below,
+# if you want to add new node, just add the new line.
+# 
+# This script are for the same propos usage, if you want make different propose,
+# like Web and DB service. This script are not suitable.
+# 
+# Also, you can't specify a primary machine and autostart function.
+#
+hosts = {
+    "ELK1" => "192.168.104.10",
+    "ELK2" => "192.168.104.20",
+    "ELK3" => "192.168.104.30",
+}
+
+Vagrant.configure(2) do |config|
+    hosts.each do |name, ip|
+        config.vm.define name do |machine|
+            machine.vm.box = "https://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-vagrant.box"
+            machine.vm.hostname = name
+            #machine.vm.synced_folder "R:/vshare/", "/vshare"
+            #machine.vm.provision "shell", inline: <<-SHELL
+            #    sudo apt update
+            #    sudo apt upgrade -y
+            #SHELL
+            #machine.vm.network :private_network, ip: ip
+            #machine.vm.network "forwarded_port", guest: 80, host: 8080
+            machine.vm.network "private_network", type: "dhcp"
+            #machine.vm.network "public_network"
+            machine.vm.provider :virtualbox do |v|
+                v.customize ["modifyvm", :id, "--name", name]
+                v.customize ["modifyvm", :id, "--cpus", 2]
+                v.customize ["modifyvm", :id, "--memory", 1024]
+                v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"] #edit /cygdrive/c/Windows/System32/drivers/etc file and ADD each node DNS and IP record. 
+            end
+        end
+    end
+end
