@@ -73,7 +73,7 @@ Vagrant.configure("2") do |config|
   # SHELL
 
   # config vm hostname
-  config.vm.hostname = "Xenial_XagiosXI-client1"
+  config.vm.hostname = "Xenial-XagiosXI-client1"
 
   #vm internal network
   config.vm.network "private_network", type: "dhcp"
