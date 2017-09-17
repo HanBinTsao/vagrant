@@ -1,0 +1,9 @@
+Vagrant.configure("2") do |config|
+    config.vm.define "drbd1" do |drbd1|
+        drbd1.vm.box = "centos/7"
+    end
+    
+    config.vm.define "drbd2" do |drbd2|
+        drbd2.vm.box = "centos/7"
+    end
+end
