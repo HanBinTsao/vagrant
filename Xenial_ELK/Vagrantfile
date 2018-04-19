@@ -18,7 +18,7 @@ hosts = {
 Vagrant.configure(2) do |config|
     hosts.each do |name, ip|
         config.vm.define name do |machine|
-            machine.vm.box = "https://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-vagrant.box"
+            machine.vm.box = "ubuntu/xenial64"
             machine.vm.hostname = name
             #machine.vm.synced_folder "R:/vshare/", "/vshare"
             #machine.vm.provision "shell", inline: <<-SHELL
@@ -26,13 +26,13 @@ Vagrant.configure(2) do |config|
             #    sudo apt upgrade -y
             #SHELL
             #machine.vm.network :private_network, ip: ip
-            #machine.vm.network "forwarded_port", guest: 80, host: 8080
+            machine.vm.network "forwarded_port", guest: 9200, host: 9200
             machine.vm.network "private_network", type: "dhcp"
             #machine.vm.network "public_network"
             machine.vm.provider :virtualbox do |v|
                 v.customize ["modifyvm", :id, "--name", name]
                 v.customize ["modifyvm", :id, "--cpus", 2]
-                v.customize ["modifyvm", :id, "--memory", 1024]
+                v.customize ["modifyvm", :id, "--memory", 8192]
                 v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"] #edit /cygdrive/c/Windows/System32/drivers/etc file and ADD each node DNS and IP record. 
             end
         end
